@@ -10,28 +10,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="90dp"
-        android:paddingHorizontal="44dp">
+        android:layout_marginBottom="@dimen/dimen_90dp"
+        android:paddingHorizontal="@dimen/dimen_44dp">
 
         <Button
-            android:layout_width="100dp"
-            android:layout_height="40dp"
+            android:id="@+id/btn_login"
+            android:layout_width="@dimen/dimen_100dp"
+            android:layout_height="@dimen/dimen_40dp"
             android:layout_alignParentLeft="true"
             android:background="@drawable/shape_login_btn"
             android:text="@string/login"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp" />
+            android:textColor="@color/color_ffffff"
+            android:textSize="@dimen/size_20sp" />
 
         <Button
-            android:layout_width="100dp"
-            android:layout_height="40dp"
+            android:id="@+id/btn_register"
+            android:layout_width="@dimen/dimen_100dp"
+            android:layout_height="@dimen/dimen_40dp"
             android:layout_alignParentRight="true"
             android:background="@drawable/shape_register_btn"
             android:text="@string/register"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp" />
+            android:textColor="@color/color_ffffff"
+            android:textSize="@dimen/size_20sp" />
 
     </RelativeLayout>
-
-
 </RelativeLayout>
