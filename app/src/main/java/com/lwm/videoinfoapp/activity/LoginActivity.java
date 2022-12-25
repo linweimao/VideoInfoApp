@@ -129,6 +129,7 @@ public class LoginActivity extends BaseActivity {
 //                    editor.putString("token", token);
 //                    editor.commit();
                     saveStringToSp("token", token);
+                    navigateTo(HomeActivity.class);
                     showToastSync(getString(R.string.login_success));
                 } else {
                     showToastSync(getString(R.string.login_fail));

@@ -11,11 +11,14 @@
     <color name="skin_text_white">#FFFFFF</color>
     <color name="skin_topbar_bg_color">#344261</color>
     <color name="text_hint">#BCBCBC</color>
-
     <color name="color_4dbe66">#4DBE66</color>
     <color name="color_b1525e">#B1525E</color>
     <color name="color_c75fe768">#C75FE768</color>
     <color name="color_f2f2f2">#F2F2F2</color>
     <color name="color_ffffff">#FFFFFF</color>
     <color name="color_afee5d59">#AFEE5D59</color>
+    <color name="color_2c97de">#2C97DE</color>
+    <color name="color_0025ff">#0025FF</color>
+    <color name="color_454544">#454544</color>
+    <color name="color_dddddd">#DDDDDD</color>
 </resources>
