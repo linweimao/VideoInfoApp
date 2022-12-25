@@ -20,17 +20,29 @@ public class RegisterActivity extends BaseActivity {
     private EditText mEtPwd;
     private Button mBtnRegister;
 
+/*
+    // 通过 BaseActivity 进行封装，使用抽象方法进行调用
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         initView();
     }
+*/
 
-    private void initView() {
+    @Override
+    protected int initLayout() {
+        return R.layout.activity_register;
+    }
+
+    protected void initView() {
         mEtAccount = (EditText) findViewById(R.id.et_account);
         mEtPwd = (EditText) findViewById(R.id.et_pwd);
         mBtnRegister = (Button) findViewById(R.id.btn_register);
+    }
+
+    @Override
+    protected void initData() {
         mBtnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

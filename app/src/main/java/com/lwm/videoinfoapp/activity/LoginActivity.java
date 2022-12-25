@@ -34,17 +34,30 @@ public class LoginActivity extends BaseActivity {
     private EditText mEtPwd;
     private Button mBtnLogin;
 
+/*
+    // 通过 BaseActivity 进行封装，使用抽象方法进行调用
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initView();
     }
+*/
 
-    private void initView() {
+    @Override
+    protected int initLayout() {
+        return R.layout.activity_login;
+    }
+
+    @Override
+    protected void initView() {
         mEtAccount = (EditText) findViewById(R.id.et_account);
         mEtPwd = (EditText) findViewById(R.id.et_pwd);
         mBtnLogin = (Button) findViewById(R.id.btn_login);
+    }
+
+    @Override
+    protected void initData() {
         mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -11,14 +11,23 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 // Activity 的基类
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
     public Context mContext;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
+        setContentView(initLayout());
+        initView();
+        initData();
     }
+
+    protected abstract int initLayout(); // Layout布局
+
+    protected abstract void initView(); // 初始化 View
+
+    protected abstract void initData(); // 初始化数据
 
     public void showToast(String msg) {
         Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
@@ -37,7 +46,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     // SharedPreferences 本地存储
-    public void saveStringToSp(String key,String val){
+    public void saveStringToSp(String key, String val) {
         SharedPreferences sp = getSharedPreferences("sp_lwm", MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.putString("key", val);

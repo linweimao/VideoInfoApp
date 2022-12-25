@@ -13,16 +13,28 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private Button mBtnLogin;
     private Button mBtnRegister;
 
+/*
+    // 通过 BaseActivity 进行封装，使用抽象方法进行调用
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
     }
+*/
 
-    private void initView() {
+    @Override
+    protected int initLayout() {
+        return R.layout.activity_main;
+    }
+
+    protected void initView() {
         mBtnLogin = (Button) findViewById(R.id.btn_login);
         mBtnRegister = (Button) findViewById(R.id.btn_register);
+    }
+
+    @Override
+    protected void initData() {
         mBtnLogin.setOnClickListener(this);
         mBtnRegister.setOnClickListener(this);
     }

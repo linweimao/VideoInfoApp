@@ -9,24 +9,29 @@
     android:orientation="vertical"
     tools:context=".activity.HomeActivity">
 
-    <androidx.viewpager.widget.ViewPager
+    <com.lwm.videoinfoapp.view.FixedViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_0dp"
         android:layout_weight="1" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_1dp"
+        android:background="@color/divider" />
+
     <com.flyco.tablayout.CommonTabLayout
         android:id="@+id/commontablayout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_54dp"
+        android:layout_height="@dimen/dimen_65dp"
         android:background="@color/color_ffffff"
-        tl:tl_iconHeight="@dimen/dimen_23dp"
-        tl:tl_iconWidth="@dimen/dimen_23dp"
+        tl:tl_iconHeight="@dimen/dimen_28dp"
+        tl:tl_iconWidth="@dimen/dimen_28dp"
         tl:tl_indicator_color="@color/color_2c97de"
         tl:tl_indicator_height="@dimen/dimen_0dp"
         tl:tl_textSelectColor="@color/color_0025ff"
         tl:tl_textUnselectColor="@color/color_454544"
-        tl:tl_textsize="@dimen/size_12sp"
+        tl:tl_textsize="@dimen/size_14sp"
         tl:tl_underline_color="@color/color_dddddd"
         tl:tl_underline_height="@dimen/dimen_1dp" />
 
