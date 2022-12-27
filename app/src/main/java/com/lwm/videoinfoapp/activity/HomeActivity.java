@@ -64,6 +64,11 @@ public class HomeActivity extends BaseActivity {
             }
         });
         mViewpager.setAdapter(new MyPagerAdapter(getSupportFragmentManager(), mTitles, mFragments));
+
+        // 当 ViewPager下 Fragment 很多时切换会出现异常(下标越界、页面空白)
+        // 解决方案：
+        //    设置预加载(启动 HomeActivity 时预加载全部 Fragment)
+        mViewpager.setOffscreenPageLimit(mFragments.size());
         // ViewPager 滑动监听(页面和底部导航栏按钮同时变化)
         mViewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
