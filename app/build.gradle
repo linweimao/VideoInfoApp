@@ -38,4 +38,5 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.5'
     // https://github.com/H07000223/FlycoTabLayout
     implementation 'io.github.h07000223:flycoTabLayout:3.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
 }
