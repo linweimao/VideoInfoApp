@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.lwm.videoinfoapp.R;
 import com.lwm.videoinfoapp.entity.VideoEntity;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -35,12 +37,14 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         VideoEntity videoEntity = mDatas.get(position);
-        holder.tvTitle.setText(videoEntity.getTitle());
-        holder.tvAuthor.setText(videoEntity.getName());
-        holder.tvDz.setText(String.valueOf(videoEntity.getDzCount()));
-        holder.tvComment.setText(String.valueOf(videoEntity.getCommentCount()));
-        holder.tvCollect.setText(String.valueOf(videoEntity.getCollectCount()));
-
+        holder.tvTitle.setText(videoEntity.getVtitle());
+        holder.tvAuthor.setText(videoEntity.getAuthor());
+        holder.tvDz.setText(String.valueOf(videoEntity.getLikeNum()));
+        holder.tvComment.setText(String.valueOf(videoEntity.getCommentNum()));
+        holder.tvCollect.setText(String.valueOf(videoEntity.getCollectNum()));
+        // 异步加载图片
+        Picasso.with(mContext).load(videoEntity.getHeadurl()).into(holder.imgHeader);
+        Picasso.with(mContext).load(videoEntity.getCoverurl()).into(holder.imgCover);
     }
 
     @Override
@@ -55,6 +59,8 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
         private TextView tvDz;
         private TextView tvComment;
         private TextView tvCollect;
+        private ImageView imgHeader;
+        private ImageView imgCover;
 
         public ViewHolder(@NonNull View view) {
             super(view);
@@ -63,6 +69,8 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
             tvDz = view.findViewById(R.id.dz);
             tvComment = view.findViewById(R.id.comment);
             tvCollect = view.findViewById(R.id.collect);
+            imgHeader = view.findViewById(R.id.img_header);
+            imgCover = view.findViewById(R.id.img_cover);
         }
     }
 }

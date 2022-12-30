@@ -39,4 +39,6 @@ dependencies {
     // https://github.com/H07000223/FlycoTabLayout
     implementation 'io.github.h07000223:flycoTabLayout:3.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    // 图片加载：https://github.com/square/picasso
+    implementation 'com.squareup.picasso:picasso:2.5.2'
 }
