@@ -16,9 +16,9 @@ public class BaseFragment extends Fragment {
 
     // 主线程中提示 Toast
     public void showToastSync(String msg) {
-        Looper.prepare();
-        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
-        Looper.loop();
+        Looper.prepare(); // 为当前线程提供一个Looper的实例
+        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show(); // 展示消息
+        Looper.loop(); // 在线程中执行消息队列，让 Looper 开始工作，从消息队列里取消息，处理消息
     }
 
     public void navigateTo(Class cls) {
