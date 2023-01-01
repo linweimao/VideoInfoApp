@@ -9,4 +9,6 @@
     <string name="search_hint">搜索你喜欢的视频</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="refresh_toast">暂时无数据</string>
+    <string name="loadmore_toast">没有更多数据</string>
 </resources>

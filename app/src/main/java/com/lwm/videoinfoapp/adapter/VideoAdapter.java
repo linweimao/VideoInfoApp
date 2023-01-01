@@ -22,6 +22,20 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
     private Context mContext;
     private List<VideoEntity> mDatas;
 
+    // 刷新(mRefreshLayout.setOnRefreshListener)加载(mRefreshLayout.setOnLoadMoreListener)时，
+    // 如果通过 VideoAdapter 构造函数传入数据则每次都要重复创建一个VideoAdapter对象
+    public void setDatas(List<VideoEntity> datas) {
+        this.mDatas = datas;
+    }
+
+    // 刷新(mRefreshLayout.setOnRefreshListener)加载(mRefreshLayout.setOnLoadMoreListener)时，
+    // 如果通过 VideoAdapter 构造函数传入数据则每次都要重复创建一个VideoAdapter对象
+    public VideoAdapter(Context context) {
+        this.mContext = context;
+    }
+
+    // 刷新(mRefreshLayout.setOnRefreshListener)加载(mRefreshLayout.setOnLoadMoreListener)时，
+    // 如果通过 VideoAdapter 构造函数传入数据则每次都要重复创建一个VideoAdapter对象
     public VideoAdapter(Context context, List<VideoEntity> datas) {
         this.mContext = context;
         this.mDatas = datas;
@@ -55,7 +69,11 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return mDatas.size();
+        if (mDatas != null && mDatas.size() > 0) {
+            return mDatas.size();
+        } else {
+            return 0;
+        }
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
