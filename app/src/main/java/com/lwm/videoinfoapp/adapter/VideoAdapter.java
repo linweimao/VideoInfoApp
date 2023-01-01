@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.lwm.videoinfoapp.R;
 import com.lwm.videoinfoapp.entity.VideoEntity;
+import com.lwm.videoinfoapp.view.CircleTransform;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -43,8 +44,13 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
         holder.tvComment.setText(String.valueOf(videoEntity.getCommentNum()));
         holder.tvCollect.setText(String.valueOf(videoEntity.getCollectNum()));
         // 异步加载图片
-        Picasso.with(mContext).load(videoEntity.getHeadurl()).into(holder.imgHeader);
-        Picasso.with(mContext).load(videoEntity.getCoverurl()).into(holder.imgCover);
+        Picasso.with(mContext)
+                .load(videoEntity.getHeadurl())
+                .transform(new CircleTransform()) // 将图片转化为定义的圆形图片
+                .into(holder.imgHeader);
+        Picasso.with(mContext)
+                .load(videoEntity.getCoverurl())
+                .into(holder.imgCover);
     }
 
     @Override
