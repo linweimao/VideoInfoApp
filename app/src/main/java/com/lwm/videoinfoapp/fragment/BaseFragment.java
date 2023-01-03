@@ -4,12 +4,44 @@ import static android.content.Context.MODE_PRIVATE;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.os.Looper;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-public class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment {
+
+    protected View mRootView;
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        // 当 mRootView为空时创建mRootView，不为空时复用 mRootView(避免重新加载initLayout()布局)
+        if (mRootView == null) {
+            mRootView = inflater.inflate(initLayout(), container, false);
+            initView();
+        }
+        return mRootView;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initData();
+    }
+
+    protected abstract int initLayout(); // Layout布局
+
+    protected abstract void initView(); // 初始化 View
+
+    protected abstract void initData(); // 初始化数据
+
     public void showToast(String msg) {
         Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
     }

@@ -53,10 +53,51 @@ public class VideoFragment extends BaseFragment {
     }
 
     @Override
+    protected int initLayout() {
+        return R.layout.fragment_video;
+    }
+
+    @Override
+    protected void initView() {
+        mRecyclerView = mRootView.findViewById(R.id.recyclerview);
+        mRefreshLayout = mRootView.findViewById(R.id.refreshLayout);
+    }
+
+    @Override
+    protected void initData() {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+        mVideoAdapter = new VideoAdapter(getActivity());
+        mRecyclerView.setAdapter(mVideoAdapter);
+        mRefreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
+        mRefreshLayout.setRefreshFooter(new ClassicsFooter(getActivity()));
+        mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+//                refreshlayout.finishRefresh(2000, false); // 传入false表示刷新失败
+                pageNum = 1; // 刷新时将pageNum(第几页)重置为 1
+                getVideoList(true);
+            }
+        });
+        mRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(RefreshLayout refreshlayout) {
+//                refreshlayout.finishLoadMore(2000, false); // 传入false表示加载失败
+                pageNum++; // 加载时将pageNum(第几页)++
+                getVideoList(false);
+            }
+        });
+        getVideoList(true);
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
+/*
+    // 通过 BaseFragment 进行封装，使用抽象方法进行调用
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -66,6 +107,7 @@ public class VideoFragment extends BaseFragment {
         return view;
     }
 
+    // 通过 BaseFragment 进行封装，使用抽象方法进行调用
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -79,7 +121,7 @@ public class VideoFragment extends BaseFragment {
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-//                refreshlayout.finishRefresh(2000/*,false*/); // 传入false表示刷新失败
+//                refreshlayout.finishRefresh(2000, false); // 传入false表示刷新失败
                 pageNum = 1; // 刷新时将pageNum(第几页)重置为 1
                 getVideoList(true);
             }
@@ -87,13 +129,14 @@ public class VideoFragment extends BaseFragment {
         mRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshlayout) {
-//                refreshlayout.finishLoadMore(2000/*,false*/); // 传入false表示加载失败
+//                refreshlayout.finishLoadMore(2000, false); // 传入false表示加载失败
                 pageNum++; // 加载时将pageNum(第几页)++
                 getVideoList(false);
             }
         });
         getVideoList(true);
     }
+*/
 
     // isRefresh：区分刷新/加载
     //    true：刷新
