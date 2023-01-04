@@ -43,7 +43,13 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.5.2'
     // 下拉刷新上拉加载：https://github.com/scwang90/SmartRefreshLayout
     implementation 'androidx.appcompat:appcompat:1.0.0'                 // 必须 1.0.0 以上
-    implementation  'io.github.scwang90:refresh-layout-kernel:2.0.5'      // 核心必须依赖
-    implementation  'io.github.scwang90:refresh-header-classics:2.0.5'    // 经典刷新头
-    implementation  'io.github.scwang90:refresh-footer-classics:2.0.5'    // 经典加载
+    implementation 'io.github.scwang90:refresh-layout-kernel:2.0.5'      // 核心必须依赖
+    implementation 'io.github.scwang90:refresh-header-classics:2.0.5'    // 经典刷新头
+    implementation 'io.github.scwang90:refresh-footer-classics:2.0.5'    // 经典加载
+    // 视频播放器：https://github.com/Doikki/DKVideoPlayer
+    implementation 'xyz.doikki.android.dkplayer:dkplayer-java:3.3.6'
+    implementation 'xyz.doikki.android.dkplayer:dkplayer-ui:3.3.6'
+    implementation 'xyz.doikki.android.dkplayer:player-exo:3.3.6'
+    implementation 'xyz.doikki.android.dkplayer:player-ijk:3.3.6'
+    implementation 'xyz.doikki.android.dkplayer:videocache:3.3.6'
 }

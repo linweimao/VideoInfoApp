@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,15 +13,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.lwm.videoinfoapp.R;
 import com.lwm.videoinfoapp.entity.VideoEntity;
+import com.lwm.videoinfoapp.listener.OnItemChildClickListener;
+import com.lwm.videoinfoapp.listener.OnItemClickListener;
 import com.lwm.videoinfoapp.view.CircleTransform;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import xyz.doikki.videocontroller.component.PrepareView;
+
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> {
 
     private Context mContext;
     private List<VideoEntity> mDatas;
+
+    private OnItemChildClickListener mOnItemChildClickListener;
+
+    private OnItemClickListener mOnItemClickListener;
 
     // 刷新(mRefreshLayout.setOnRefreshListener)加载(mRefreshLayout.setOnLoadMoreListener)时，
     // 如果通过 VideoAdapter 构造函数传入数据则每次都要重复创建一个VideoAdapter对象
@@ -62,9 +71,13 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
                 .load(videoEntity.getHeadurl())
                 .transform(new CircleTransform()) // 将图片转化为定义的圆形图片
                 .into(holder.imgHeader);
+//        Picasso.with(mContext)
+//                .load(videoEntity.getCoverurl())
+//                .into(holder.imgCover);
         Picasso.with(mContext)
                 .load(videoEntity.getCoverurl())
-                .into(holder.imgCover);
+                .into(holder.mThumb);
+        holder.mPosition = position;
     }
 
     @Override
@@ -76,7 +89,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
         }
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView tvTitle;
         private TextView tvAuthor;
@@ -84,7 +97,11 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
         private TextView tvComment;
         private TextView tvCollect;
         private ImageView imgHeader;
-        private ImageView imgCover;
+        //        private ImageView imgCover;
+        public FrameLayout mPlayerContainer;
+        public ImageView mThumb; // 缩略图
+        public PrepareView mPrepareView;
+        public int mPosition;
 
         public ViewHolder(@NonNull View view) {
             super(view);
@@ -94,7 +111,41 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
             tvComment = view.findViewById(R.id.comment);
             tvCollect = view.findViewById(R.id.collect);
             imgHeader = view.findViewById(R.id.img_header);
-            imgCover = view.findViewById(R.id.img_cover);
+//            imgCover = view.findViewById(R.id.img_cover);
+            mPlayerContainer = view.findViewById(R.id.player_container);
+            mPrepareView = view.findViewById(R.id.prepare_view);
+            mThumb = mPrepareView.findViewById(xyz.doikki.videocontroller.R.id.thumb);
+            // 视频播放器的点击事件
+            if (mOnItemChildClickListener != null) {
+                mPlayerContainer.setOnClickListener(this);
+            }
+            // 整个子ItemView的点击事件
+            if (mOnItemClickListener != null) {
+                view.setOnClickListener(this);
+            }
+            //通过tag将 ViewHolder和 itemView绑定
+            view.setTag(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            if (v.getId() == R.id.player_container) {
+                if (mOnItemChildClickListener != null) {
+                    mOnItemChildClickListener.onItemChildClick(mPosition);
+                }
+            } else {
+                if (mOnItemClickListener != null) {
+                    mOnItemClickListener.onItemClick(mPosition);
+                }
+            }
+        }
+    }
+
+    public void setOnItemChildClickListener(OnItemChildClickListener onItemChildClickListener) {
+        mOnItemChildClickListener = onItemChildClickListener;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        mOnItemClickListener = onItemClickListener;
     }
 }

@@ -15,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import xyz.doikki.videoplayer.player.VideoViewManager;
+
 public abstract class BaseFragment extends Fragment {
 
     protected View mRootView;
@@ -69,5 +71,12 @@ public abstract class BaseFragment extends Fragment {
     protected String getStringFromSp(String key) {
         SharedPreferences sp = getActivity().getSharedPreferences("sp_lwm", MODE_PRIVATE);
         return sp.getString(key, "");
+    }
+
+    /**
+     * 子类可通过此方法直接拿到VideoViewManager
+     */
+    protected VideoViewManager getVideoViewManager() {
+        return VideoViewManager.instance();
     }
 }
