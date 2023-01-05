@@ -33,7 +33,7 @@
             android:exported="false" />
         <activity
             android:name=".activity.HomeActivity"
-            android:exported="false" />
+            android:configChanges="orientation|screenSize"
+            android:exported="false" /> <!-- 添加后Activity横竖屏切换时生命周期不会发生变化(不会销毁在重新创建) -->
     </application>
-
 </manifest>
