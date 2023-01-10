@@ -49,7 +49,7 @@ import xyz.doikki.videoplayer.player.VideoView;
 
 public class VideoFragment extends BaseFragment implements OnItemChildClickListener {
 
-    private String mTitle;
+    private int categoryId;
     private RecyclerView mRecyclerView;
     private RefreshLayout mRefreshLayout;
     private int pageNum = 1; // 分页：第几页
@@ -77,9 +77,9 @@ public class VideoFragment extends BaseFragment implements OnItemChildClickListe
         // Required empty public constructor
     }
 
-    public static VideoFragment newInstance(String title) {
+    public static VideoFragment newInstance(int categoryId) {
         VideoFragment fragment = new VideoFragment();
-        fragment.mTitle = title;
+        fragment.categoryId = categoryId;
         return fragment;
     }
 
