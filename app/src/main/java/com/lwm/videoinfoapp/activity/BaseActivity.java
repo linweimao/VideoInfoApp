@@ -49,7 +49,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void saveStringToSp(String key, String val) {
         SharedPreferences sp = getSharedPreferences("sp_lwm", MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
-        editor.putString("key", val);
+        editor.putString(key, val);
         editor.commit();
     }
 }
