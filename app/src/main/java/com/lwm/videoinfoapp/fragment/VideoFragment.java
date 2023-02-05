@@ -265,7 +265,8 @@ public class VideoFragment extends BaseFragment implements OnItemChildClickListe
             // "page" 和 "limit"用于实现分页
             params.put("page", pageNum); // 分页：第几页
             params.put("limit", ApiConfig.PAGE_SIZE);  // 分页：每页5条数据
-            Api.config(ApiConfig.VIDEO_LIST, params).getRequest(new RequestCallback() {
+            params.put("categoryId", categoryId);
+            Api.config(ApiConfig.VIDEO_LIST_BY_CATEGORY, params).getRequest(new RequestCallback() {
                 @Override
                 public void onSuccess(String res) {
                     Log.d("onSuccess：", res);
