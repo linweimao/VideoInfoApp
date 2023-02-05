@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,6 +73,20 @@ public class VideoFragment extends BaseFragment implements OnItemChildClickListe
      * 上次播放的位置，用于页面切回来之后恢复播放
      */
     protected int mLastPos = mCurPos;
+
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 0:
+                    // 将数据设置进 VideoAdapter
+                    mVideoAdapter.setDatas(datas);
+                    mVideoAdapter.notifyDataSetChanged(); // 通知 RecyclerView 刷新页面(刷新数据)
+                    break;
+            }
+        }
+    };
 
 
     public VideoFragment() {
@@ -270,46 +286,39 @@ public class VideoFragment extends BaseFragment implements OnItemChildClickListe
                 @Override
                 public void onSuccess(String res) {
                     Log.d("onSuccess：", res);
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
+                    if (isRefresh) {
+                        mRefreshLayout.finishRefresh(true); // 将刷新动画关闭
+                    } else {
+                        mRefreshLayout.finishLoadMore(true); // 将加载动画关闭
+                    }
+                    VideoListResponse response = new Gson().fromJson(res, VideoListResponse.class);
+                    if (response != null && response.getCode() == 0) {
+                        /*
+                        List<VideoEntity> datas = response.getPage().getList();
+                        // 刷新(mRefreshLayout.setOnRefreshListener)加载(mRefreshLayout.setOnLoadMoreListener)时，
+                        // 如果通过 VideoAdapter 构造函数传入数据则每次都要重复创建一个VideoAdapter对象
+                        VideoAdapter videoAdapter = new VideoAdapter(getActivity(), datas);
+                        mRecyclerView.setAdapter(videoAdapter);
+                        */
+                        List<VideoEntity> list = response.getPage().getList();
+                        // 判断接口返回的数据是否为空
+                        if (list != null && list.size() > 0) {
                             if (isRefresh) {
-                                mRefreshLayout.finishRefresh(true); // 将刷新动画关闭
+                                // 刷新时
+                                datas = list;
                             } else {
-                                mRefreshLayout.finishLoadMore(true); // 将加载动画关闭
+                                // 加载时，添加 list
+                                datas.addAll(list);
                             }
-                            VideoListResponse response = new Gson().fromJson(res, VideoListResponse.class);
-                            if (response != null && response.getCode() == 0) {
-                                /*
-                                List<VideoEntity> datas = response.getPage().getList();
-                                // 刷新(mRefreshLayout.setOnRefreshListener)加载(mRefreshLayout.setOnLoadMoreListener)时，
-                                // 如果通过 VideoAdapter 构造函数传入数据则每次都要重复创建一个VideoAdapter对象
-                                VideoAdapter videoAdapter = new VideoAdapter(getActivity(), datas);
-                                mRecyclerView.setAdapter(videoAdapter);
-                                */
-                                List<VideoEntity> list = response.getPage().getList();
-                                // 判断接口返回的数据是否为空
-                                if (list != null && list.size() > 0) {
-                                    if (isRefresh) {
-                                        // 刷新时
-                                        datas = list;
-                                    } else {
-                                        // 加载时，添加 list
-                                        datas.addAll(list);
-                                    }
-                                    // 将数据设置进 VideoAdapter
-                                    mVideoAdapter.setDatas(datas);
-                                    mVideoAdapter.notifyDataSetChanged(); // 通知 RecyclerView 刷新页面(刷新数据)
-                                } else {
-                                    if (isRefresh) {
-                                        showToast(getString(R.string.refresh_toast));
-                                    } else {
-                                        showToast(getString(R.string.loadmore_toast));
-                                    }
-                                }
+                            mHandler.sendEmptyMessage(0);
+                        } else {
+                            if (isRefresh) {
+                                showToastSync(getString(R.string.refresh_toast));
+                            } else {
+                                showToastSync(getString(R.string.loadmore_toast));
                             }
                         }
-                    });
+                    }
 //                    showToastSync(res);
                 }
 
