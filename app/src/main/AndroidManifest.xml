@@ -35,5 +35,11 @@
             android:name=".activity.HomeActivity"
             android:configChanges="orientation|screenSize"
             android:exported="false" /> <!-- 添加后Activity横竖屏切换时生命周期不会发生变化(不会销毁在重新创建) -->
+
+        <!-- android:screenOrientation="portrait"设置为竖屏-->
+        <activity
+            android:name=".activity.WebActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 </manifest>

@@ -60,6 +60,13 @@ public abstract class BaseFragment extends Fragment {
         startActivity(intent);
     }
 
+    // 跳转带参数
+    public void navigateToWithBundle(Class cls,Bundle bundle) {
+        Intent intent = new Intent(getActivity(), cls);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
     // SharedPreferences 本地存储
     public void saveStringToSp(String key, String val) {
         SharedPreferences sp = getActivity().getSharedPreferences("sp_lwm", MODE_PRIVATE);

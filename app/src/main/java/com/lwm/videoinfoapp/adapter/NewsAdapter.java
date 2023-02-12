@@ -15,12 +15,18 @@ import com.lwm.videoinfoapp.entity.NewsEntity;
 import com.lwm.videoinfoapp.view.CircleTransform;
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
     private List<NewsEntity> mDatas;
+    private OnItemClickListener mOnItemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        mOnItemClickListener = onItemClickListener;
+    }
 
     public void setDatas(List<NewsEntity> datas) {
         this.mDatas = datas;
@@ -68,6 +74,8 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             vh.author.setText(newsEntity.getAuthorName());
             vh.comment.setText(newsEntity.getCommentCount() + mContext.getResources().getString(R.string.news_item_comment));
             vh.time.setText(newsEntity.getReleaseDate());
+            vh.newsEntity = newsEntity;
+
             Picasso.with(mContext)
                     .load(newsEntity.getHeaderUrl())
                     .transform(new CircleTransform()) // 将图片转化为定义的圆形图片
@@ -82,6 +90,8 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             vh.author.setText(newsEntity.getAuthorName());
             vh.comment.setText(newsEntity.getCommentCount() + mContext.getResources().getString(R.string.news_item_comment));
             vh.time.setText(newsEntity.getReleaseDate());
+            vh.newsEntity = newsEntity;
+
             Picasso.with(mContext)
                     .load(newsEntity.getHeaderUrl())
                     .transform(new CircleTransform()) // 将图片转化为定义的圆形图片
@@ -105,6 +115,8 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             vh.author.setText(newsEntity.getAuthorName());
             vh.comment.setText(newsEntity.getCommentCount() + mContext.getResources().getString(R.string.news_item_comment));
             vh.time.setText(newsEntity.getReleaseDate());
+            vh.newsEntity = newsEntity;
+
             Picasso.with(mContext)
                     .load(newsEntity.getHeaderUrl())
                     .transform(new CircleTransform()) // 将图片转化为定义的圆形图片
@@ -133,6 +145,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         private TextView time;
         private ImageView header; // 头像
         private ImageView thumb; // 缩略图
+        private NewsEntity newsEntity;
 
         public ViewHolderOne(@NonNull View view) {
             super(view);
@@ -142,6 +155,13 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             time = view.findViewById(R.id.time);
             header = view.findViewById(R.id.header);
             thumb = view.findViewById(R.id.thumb);
+            // ItemView的点击事件
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnItemClickListener.onItemClick(newsEntity);
+                }
+            });
         }
     }
 
@@ -153,6 +173,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         private TextView time;
         private ImageView header; // 头像
         private ImageView pic1, pic2, pic3; // 缩略图
+        private NewsEntity newsEntity;
 
         public ViewHolderTwo(@NonNull View view) {
             super(view);
@@ -164,6 +185,13 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             pic1 = view.findViewById(R.id.pic1);
             pic2 = view.findViewById(R.id.pic2);
             pic3 = view.findViewById(R.id.pic3);
+            // ItemView的点击事件
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnItemClickListener.onItemClick(newsEntity);
+                }
+            });
         }
     }
 
@@ -175,6 +203,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         private TextView time;
         private ImageView header; // 头像
         private ImageView thumb; // 缩略图
+        private NewsEntity newsEntity;
 
         public ViewHolderThree(@NonNull View view) {
             super(view);
@@ -184,6 +213,17 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             time = view.findViewById(R.id.time);
             header = view.findViewById(R.id.header);
             thumb = view.findViewById(R.id.thumb);
+            // ItemView的点击事件
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnItemClickListener.onItemClick(newsEntity);
+                }
+            });
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(Serializable obj);
     }
 }

@@ -1,5 +1,6 @@
 package com.lwm.videoinfoapp.fragment;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.gson.Gson;
 import com.lwm.videoinfoapp.R;
 import com.lwm.videoinfoapp.activity.LoginActivity;
+import com.lwm.videoinfoapp.activity.WebActivity;
 import com.lwm.videoinfoapp.adapter.NewsAdapter;
 import com.lwm.videoinfoapp.api.Api;
 import com.lwm.videoinfoapp.api.ApiConfig;
@@ -24,11 +26,12 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class NewsFragment extends BaseFragment {
+public class NewsFragment extends BaseFragment implements NewsAdapter.OnItemClickListener {
 
     private RecyclerView mRecyclerView;
     private RefreshLayout mRefreshLayout;
@@ -77,6 +80,7 @@ public class NewsFragment extends BaseFragment {
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mNewsAdapter = new NewsAdapter(getActivity());
         mRecyclerView.setAdapter(mNewsAdapter);
+        mNewsAdapter.setOnItemClickListener(this);
         mRefreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
         mRefreshLayout.setRefreshFooter(new ClassicsFooter(getActivity()));
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
@@ -96,6 +100,17 @@ public class NewsFragment extends BaseFragment {
             }
         });
         getNewsList(true);
+    }
+
+    // ItemView点击事件的回调
+    @Override
+    public void onItemClick(Serializable obj) {
+        NewsEntity newsEntity = (NewsEntity) obj;
+        // 拼接访问h5页面的Url
+        String url = "http://192.168.16.104:8089/newsDetail?title=" + newsEntity.getAuthorName();
+        Bundle bundle = new Bundle();
+        bundle.putString("url", url);
+        navigateToWithBundle(WebActivity.class, bundle);
     }
 
     /**
