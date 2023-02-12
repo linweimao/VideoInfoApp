@@ -4,12 +4,16 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lwm.videoinfoapp.R;
 import com.lwm.videoinfoapp.entity.NewsEntity;
+import com.lwm.videoinfoapp.view.CircleTransform;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -57,14 +61,59 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         int type = getItemViewType(position);
+        NewsEntity newsEntity = mDatas.get(position);
         if (type == 1) {
             ViewHolderOne vh = (ViewHolderOne) holder;
+            vh.title.setText(newsEntity.getNewsTitle());
+            vh.author.setText(newsEntity.getAuthorName());
+            vh.comment.setText(newsEntity.getCommentCount() + mContext.getResources().getString(R.string.news_item_comment));
+            vh.time.setText(newsEntity.getReleaseDate());
+            Picasso.with(mContext)
+                    .load(newsEntity.getHeaderUrl())
+                    .transform(new CircleTransform()) // 将图片转化为定义的圆形图片
+                    .into(vh.header);
+            // 当 type == 1时只有一张图片，所以 get(0).getThumbUrl()
+            Picasso.with(mContext)
+                    .load(newsEntity.getThumbEntities().get(0).getThumbUrl())
+                    .into(vh.thumb);
         } else if (type == 2) {
             ViewHolderTwo vh = (ViewHolderTwo) holder;
+            vh.title.setText(newsEntity.getNewsTitle());
+            vh.author.setText(newsEntity.getAuthorName());
+            vh.comment.setText(newsEntity.getCommentCount() + mContext.getResources().getString(R.string.news_item_comment));
+            vh.time.setText(newsEntity.getReleaseDate());
+            Picasso.with(mContext)
+                    .load(newsEntity.getHeaderUrl())
+                    .transform(new CircleTransform()) // 将图片转化为定义的圆形图片
+                    .into(vh.header);
+            // 当 type == 2时有三张图片
+            // get(0).getThumbUrl()为第一张
+            Picasso.with(mContext)
+                    .load(newsEntity.getThumbEntities().get(0).getThumbUrl())
+                    .into(vh.pic1);
+            // get(1).getThumbUrl()为第二张
+            Picasso.with(mContext)
+                    .load(newsEntity.getThumbEntities().get(1).getThumbUrl())
+                    .into(vh.pic2);
+            // get(2).getThumbUrl()为第三张
+            Picasso.with(mContext)
+                    .load(newsEntity.getThumbEntities().get(2).getThumbUrl())
+                    .into(vh.pic3);
         } else {
             ViewHolderThree vh = (ViewHolderThree) holder;
+            vh.title.setText(newsEntity.getNewsTitle());
+            vh.author.setText(newsEntity.getAuthorName());
+            vh.comment.setText(newsEntity.getCommentCount() + mContext.getResources().getString(R.string.news_item_comment));
+            vh.time.setText(newsEntity.getReleaseDate());
+            Picasso.with(mContext)
+                    .load(newsEntity.getHeaderUrl())
+                    .transform(new CircleTransform()) // 将图片转化为定义的圆形图片
+                    .into(vh.header);
+            // 当 type == 3时只有一张图片，所以 get(0).getThumbUrl()
+            Picasso.with(mContext)
+                    .load(newsEntity.getThumbEntities().get(0).getThumbUrl())
+                    .into(vh.thumb);
         }
-        NewsEntity newsEntity = mDatas.get(position);
     }
 
     @Override
@@ -78,22 +127,63 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public class ViewHolderOne extends RecyclerView.ViewHolder {
 
+        private TextView title;
+        private TextView author;
+        private TextView comment;
+        private TextView time;
+        private ImageView header; // 头像
+        private ImageView thumb; // 缩略图
+
         public ViewHolderOne(@NonNull View view) {
             super(view);
+            title = view.findViewById(R.id.title);
+            author = view.findViewById(R.id.author);
+            comment = view.findViewById(R.id.comment);
+            time = view.findViewById(R.id.time);
+            header = view.findViewById(R.id.header);
+            thumb = view.findViewById(R.id.thumb);
         }
     }
 
     public class ViewHolderTwo extends RecyclerView.ViewHolder {
 
+        private TextView title;
+        private TextView author;
+        private TextView comment;
+        private TextView time;
+        private ImageView header; // 头像
+        private ImageView pic1, pic2, pic3; // 缩略图
+
         public ViewHolderTwo(@NonNull View view) {
             super(view);
+            title = view.findViewById(R.id.title);
+            author = view.findViewById(R.id.author);
+            comment = view.findViewById(R.id.comment);
+            time = view.findViewById(R.id.time);
+            header = view.findViewById(R.id.header);
+            pic1 = view.findViewById(R.id.pic1);
+            pic2 = view.findViewById(R.id.pic2);
+            pic3 = view.findViewById(R.id.pic3);
         }
     }
 
     public class ViewHolderThree extends RecyclerView.ViewHolder {
 
+        private TextView title;
+        private TextView author;
+        private TextView comment;
+        private TextView time;
+        private ImageView header; // 头像
+        private ImageView thumb; // 缩略图
+
         public ViewHolderThree(@NonNull View view) {
             super(view);
+            title = view.findViewById(R.id.title);
+            author = view.findViewById(R.id.author);
+            comment = view.findViewById(R.id.comment);
+            time = view.findViewById(R.id.time);
+            header = view.findViewById(R.id.header);
+            thumb = view.findViewById(R.id.thumb);
         }
     }
 }
