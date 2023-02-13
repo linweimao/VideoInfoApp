@@ -1,19 +1,19 @@
 package com.lwm.videoinfoapp.fragment;
 
-import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.lwm.videoinfoapp.R;
 
-public class MyFragment extends Fragment {
+import butterknife.BindView;
+import butterknife.OnClick;
+
+public class MyFragment extends BaseFragment {
+
+    @BindView(R.id.img_header)
+    ImageView imgHeader;
 
     public MyFragment() {
-        // Required empty public constructor
     }
 
     public static MyFragment newInstance() {
@@ -22,14 +22,31 @@ public class MyFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected int initLayout() {
+        return R.layout.fragment_my;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my, container, false);
+    protected void initView() {
+
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    @OnClick({R.id.img_header, R.id.rl_collect, R.id.rl_skin, R.id.rl_logout})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.img_header: // 头像
+                break;
+            case R.id.rl_collect: // 我的收藏
+                break;
+            case R.id.rl_skin: // 换肤
+                break;
+            case R.id.rl_logout: // 退出登录
+                break;
+        }
     }
 }

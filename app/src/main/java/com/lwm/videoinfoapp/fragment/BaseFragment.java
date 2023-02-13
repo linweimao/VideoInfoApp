@@ -15,11 +15,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import xyz.doikki.videoplayer.player.VideoViewManager;
 
 public abstract class BaseFragment extends Fragment {
 
     protected View mRootView;
+    private Unbinder mUnbinder;
 
     @Nullable
     @Override
@@ -29,6 +32,7 @@ public abstract class BaseFragment extends Fragment {
             mRootView = inflater.inflate(initLayout(), container, false);
             initView();
         }
+        mUnbinder = ButterKnife.bind(this, mRootView); // 将 mRootView 和 ButterKnife进行绑定
         return mRootView;
     }
 
@@ -36,6 +40,12 @@ public abstract class BaseFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initData();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mUnbinder.unbind(); // 将 mRootView 和 ButterKnife进行解绑
     }
 
     protected abstract int initLayout(); // Layout布局

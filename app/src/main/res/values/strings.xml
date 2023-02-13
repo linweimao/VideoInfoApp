@@ -17,4 +17,14 @@
     <string name="news_item_author">游戏早知道 .</string>
     <string name="news_item_comment">评论 .</string>
     <string name="news_item_time">1小时前</string>
+    <string name="my_title">我的</string>
+    <string name="my_name">LiniL</string>
+    <string name="my_welcome_text">欢迎来到此平台</string>
+    <string name="my_read_text">阅读</string>
+    <string name="my_like_text">点赞</string>
+    <string name="my_comment_text">评论</string>
+    <string name="my_share_text">分享</string>
+    <string name="my_collection_text">我的收藏</string>
+    <string name="my_change_skin_text">换肤</string>
+    <string name="my_logout_text">退出登录</string>
 </resources>

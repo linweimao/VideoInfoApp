@@ -53,4 +53,7 @@ dependencies {
     implementation 'xyz.doikki.android.dkplayer:player-exo:3.3.6'
     implementation 'xyz.doikki.android.dkplayer:player-ijk:3.3.6'
     implementation 'xyz.doikki.android.dkplayer:videocache:3.3.6'
+    // butterknife：https://github.com/JakeWharton/butterknife
+    implementation 'com.jakewharton:butterknife:10.2.3'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
 }
