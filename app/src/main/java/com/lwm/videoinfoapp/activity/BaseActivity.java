@@ -45,6 +45,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void navigateToWithFlag(Class cls, int flags) {
+        Intent intent = new Intent(mContext, cls);
+        intent.setFlags(flags);
+        startActivity(intent);
+    }
+
     // SharedPreferences 本地存储
     public void saveStringToSp(String key, String val) {
         SharedPreferences sp = getSharedPreferences("sp_lwm", MODE_PRIVATE);
