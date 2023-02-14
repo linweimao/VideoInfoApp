@@ -105,6 +105,19 @@ public class Api {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String result = response.body().string();
+                try {
+                    // 当 token失效时返回登录页进行重新登录
+                    JSONObject jsonObject = new JSONObject(result);
+                    String code = jsonObject.getString("code");
+                    // token为空(没有登录) 或 token失效时 code均为401)
+                    // expire为失效时间
+                    if ("401".equals(code)) {
+                        Intent intent = new Intent(context, LoginActivity.class);
+                        context.startActivity(intent);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 callback.onSuccess(result);
             }
         });

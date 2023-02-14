@@ -86,49 +86,44 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void getVideoCategoryList() {
-        String token = getStringFromSp("token");
-        if (!StringUtils.isEmpty(token)) {
-            HashMap<String, Object> params = new HashMap<>();
-            Api.config(ApiConfig.VIDEO_CATEGORY_LIST, params).getRequest(getActivity(), new RequestCallback() {
-                @Override
-                public void onSuccess(String res) {
-                    Log.d("onSuccess：", res);
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            VideoCategoryResponse response = new Gson().fromJson(res, VideoCategoryResponse.class);
-                            if (response != null && response.getCode() == 0) {
-                                List<CategoryEntity> list = response.getPage().getList();
-                                // 判断接口返回的数据是否为空
-                                if (list != null && list.size() > 0) {
-                                    mTitles = new String[list.size()];
-                                    for (int i = 0; i < list.size(); i++) {
-                                        mTitles[i] = list.get(i).getCategoryName();
-                                        mFragments.add(VideoFragment.newInstance(list.get(i).getCategoryId()));
-                                    }
-
-                                    // 当 ViewPager下 Fragment 很多时切换会出现异常(下标越界、页面空白)
-                                    // 解决方案：
-                                    //    设置预加载(启动 HomeFragment 时预加载全部 Fragment)
-                                    mViewPager.setOffscreenPageLimit(mFragments.size());
-                                    mViewPager.setAdapter(new HomeAdapter(getFragmentManager(), mTitles, mFragments));
-                                    mSlidingtablayout.setViewPager(mViewPager); // SlidingTabLayout 绑定 ViewPager
-
+        HashMap<String, Object> params = new HashMap<>();
+        Api.config(ApiConfig.VIDEO_CATEGORY_LIST, params).getRequest(getActivity(), new RequestCallback() {
+            @Override
+            public void onSuccess(String res) {
+                Log.d("onSuccess：", res);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        VideoCategoryResponse response = new Gson().fromJson(res, VideoCategoryResponse.class);
+                        if (response != null && response.getCode() == 0) {
+                            List<CategoryEntity> list = response.getPage().getList();
+                            // 判断接口返回的数据是否为空
+                            if (list != null && list.size() > 0) {
+                                mTitles = new String[list.size()];
+                                for (int i = 0; i < list.size(); i++) {
+                                    mTitles[i] = list.get(i).getCategoryName();
+                                    mFragments.add(VideoFragment.newInstance(list.get(i).getCategoryId()));
                                 }
+
+                                // 当 ViewPager下 Fragment 很多时切换会出现异常(下标越界、页面空白)
+                                // 解决方案：
+                                //    设置预加载(启动 HomeFragment 时预加载全部 Fragment)
+                                mViewPager.setOffscreenPageLimit(mFragments.size());
+                                mViewPager.setAdapter(new HomeAdapter(getFragmentManager(), mTitles, mFragments));
+                                mSlidingtablayout.setViewPager(mViewPager); // SlidingTabLayout 绑定 ViewPager
+
                             }
                         }
-                    });
+                    }
+                });
 //                    showToastSync(res);
-                }
+            }
 
-                @Override
-                public void onFailure(Exception e) {
+            @Override
+            public void onFailure(Exception e) {
 
-                }
-            });
-        } else {
-            navigateTo(LoginActivity.class);
-        }
+            }
+        });
     }
 
 /*

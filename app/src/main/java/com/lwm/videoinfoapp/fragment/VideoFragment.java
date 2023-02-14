@@ -274,24 +274,22 @@ public class VideoFragment extends BaseFragment implements OnItemChildClickListe
     //    true：刷新
     //    false：加载
     private void getVideoList(boolean isRefresh) {
-        String token = getStringFromSp("token");
-        if (!StringUtils.isEmpty(token)) {
-            HashMap<String, Object> params = new HashMap<>();
-            // "page" 和 "limit"用于实现分页
-            params.put("page", pageNum); // 分页：第几页
-            params.put("limit", ApiConfig.PAGE_SIZE);  // 分页：每页5条数据
-            params.put("categoryId", categoryId);
-            Api.config(ApiConfig.VIDEO_LIST_BY_CATEGORY, params).getRequest(getActivity(), new RequestCallback() {
-                @Override
-                public void onSuccess(String res) {
-                    Log.d("onSuccess：", res);
-                    if (isRefresh) {
-                        mRefreshLayout.finishRefresh(true); // 将刷新动画关闭
-                    } else {
-                        mRefreshLayout.finishLoadMore(true); // 将加载动画关闭
-                    }
-                    VideoListResponse response = new Gson().fromJson(res, VideoListResponse.class);
-                    if (response != null && response.getCode() == 0) {
+        HashMap<String, Object> params = new HashMap<>();
+        // "page" 和 "limit"用于实现分页
+        params.put("page", pageNum); // 分页：第几页
+        params.put("limit", ApiConfig.PAGE_SIZE);  // 分页：每页5条数据
+        params.put("categoryId", categoryId);
+        Api.config(ApiConfig.VIDEO_LIST_BY_CATEGORY, params).getRequest(getActivity(), new RequestCallback() {
+            @Override
+            public void onSuccess(String res) {
+                Log.d("onSuccess：", res);
+                if (isRefresh) {
+                    mRefreshLayout.finishRefresh(true); // 将刷新动画关闭
+                } else {
+                    mRefreshLayout.finishLoadMore(true); // 将加载动画关闭
+                }
+                VideoListResponse response = new Gson().fromJson(res, VideoListResponse.class);
+                if (response != null && response.getCode() == 0) {
                         /*
                         List<VideoEntity> datas = response.getPage().getList();
                         // 刷新(mRefreshLayout.setOnRefreshListener)加载(mRefreshLayout.setOnLoadMoreListener)时，
@@ -299,41 +297,38 @@ public class VideoFragment extends BaseFragment implements OnItemChildClickListe
                         VideoAdapter videoAdapter = new VideoAdapter(getActivity(), datas);
                         mRecyclerView.setAdapter(videoAdapter);
                         */
-                        List<VideoEntity> list = response.getPage().getList();
-                        // 判断接口返回的数据是否为空
-                        if (list != null && list.size() > 0) {
-                            if (isRefresh) {
-                                // 刷新时
-                                datas = list;
-                            } else {
-                                // 加载时，添加 list
-                                datas.addAll(list);
-                            }
-                            mHandler.sendEmptyMessage(0);
+                    List<VideoEntity> list = response.getPage().getList();
+                    // 判断接口返回的数据是否为空
+                    if (list != null && list.size() > 0) {
+                        if (isRefresh) {
+                            // 刷新时
+                            datas = list;
                         } else {
-                            if (isRefresh) {
-                                showToastSync(getString(R.string.refresh_toast));
-                            } else {
-                                showToastSync(getString(R.string.loadmore_toast));
-                            }
+                            // 加载时，添加 list
+                            datas.addAll(list);
+                        }
+                        mHandler.sendEmptyMessage(0);
+                    } else {
+                        if (isRefresh) {
+                            showToastSync(getString(R.string.refresh_toast));
+                        } else {
+                            showToastSync(getString(R.string.loadmore_toast));
                         }
                     }
+                }
 //                    showToastSync(res);
-                }
+            }
 
-                @Override
-                public void onFailure(Exception e) {
-                    // 接口请求失败也要关闭动画
-                    if (isRefresh) {
-                        mRefreshLayout.finishRefresh(true); // 将刷新动画关闭
-                    } else {
-                        mRefreshLayout.finishLoadMore(true); // 将加载动画关闭
-                    }
+            @Override
+            public void onFailure(Exception e) {
+                // 接口请求失败也要关闭动画
+                if (isRefresh) {
+                    mRefreshLayout.finishRefresh(true); // 将刷新动画关闭
+                } else {
+                    mRefreshLayout.finishLoadMore(true); // 将加载动画关闭
                 }
-            });
-        } else {
-            navigateTo(LoginActivity.class);
-        }
+            }
+        });
     }
 
     /*

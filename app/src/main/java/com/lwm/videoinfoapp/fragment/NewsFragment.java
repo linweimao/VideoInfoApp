@@ -119,57 +119,52 @@ public class NewsFragment extends BaseFragment implements NewsAdapter.OnItemClic
      * false：加载
      */
     private void getNewsList(boolean isRefresh) {
-        String token = getStringFromSp("token");
-        if (!StringUtils.isEmpty(token)) {
-            HashMap<String, Object> params = new HashMap<>();
-            // "page" 和 "limit"用于实现分页
-            params.put("page", pageNum); // 分页：第几页
-            params.put("limit", ApiConfig.PAGE_SIZE);  // 分页：每页5条数据
-            Api.config(ApiConfig.NEWS_LIST, params).getRequest(getActivity(), new RequestCallback() {
-                @Override
-                public void onSuccess(String res) {
-                    Log.d("onSuccess：", res);
-                    if (isRefresh) {
-                        mRefreshLayout.finishRefresh(true); // 将刷新动画关闭
-                    } else {
-                        mRefreshLayout.finishLoadMore(true); // 将加载动画关闭
-                    }
-                    NewsListResponse response = new Gson().fromJson(res, NewsListResponse.class);
-                    if (response != null && response.getCode() == 0) {
-                        List<NewsEntity> list = response.getPage().getList();
-                        // 判断接口返回的数据是否为空
-                        if (list != null && list.size() > 0) {
-                            if (isRefresh) {
-                                // 刷新时
-                                datas = list;
-                            } else {
-                                // 加载时，添加 list
-                                datas.addAll(list);
-                            }
-                            mHandler.sendEmptyMessage(0);
+        HashMap<String, Object> params = new HashMap<>();
+        // "page" 和 "limit"用于实现分页
+        params.put("page", pageNum); // 分页：第几页
+        params.put("limit", ApiConfig.PAGE_SIZE);  // 分页：每页5条数据
+        Api.config(ApiConfig.NEWS_LIST, params).getRequest(getActivity(), new RequestCallback() {
+            @Override
+            public void onSuccess(String res) {
+                Log.d("onSuccess：", res);
+                if (isRefresh) {
+                    mRefreshLayout.finishRefresh(true); // 将刷新动画关闭
+                } else {
+                    mRefreshLayout.finishLoadMore(true); // 将加载动画关闭
+                }
+                NewsListResponse response = new Gson().fromJson(res, NewsListResponse.class);
+                if (response != null && response.getCode() == 0) {
+                    List<NewsEntity> list = response.getPage().getList();
+                    // 判断接口返回的数据是否为空
+                    if (list != null && list.size() > 0) {
+                        if (isRefresh) {
+                            // 刷新时
+                            datas = list;
                         } else {
-                            if (isRefresh) {
-                                showToastSync(getString(R.string.refresh_toast));
-                            } else {
-                                showToastSync(getString(R.string.loadmore_toast));
-                            }
+                            // 加载时，添加 list
+                            datas.addAll(list);
+                        }
+                        mHandler.sendEmptyMessage(0);
+                    } else {
+                        if (isRefresh) {
+                            showToastSync(getString(R.string.refresh_toast));
+                        } else {
+                            showToastSync(getString(R.string.loadmore_toast));
                         }
                     }
+                }
 //                    showToastSync(res);
-                }
+            }
 
-                @Override
-                public void onFailure(Exception e) {
-                    // 接口请求失败也要关闭动画
-                    if (isRefresh) {
-                        mRefreshLayout.finishRefresh(true); // 将刷新动画关闭
-                    } else {
-                        mRefreshLayout.finishLoadMore(true); // 将加载动画关闭
-                    }
+            @Override
+            public void onFailure(Exception e) {
+                // 接口请求失败也要关闭动画
+                if (isRefresh) {
+                    mRefreshLayout.finishRefresh(true); // 将刷新动画关闭
+                } else {
+                    mRefreshLayout.finishLoadMore(true); // 将加载动画关闭
                 }
-            });
-        } else {
-            navigateTo(LoginActivity.class);
-        }
+            }
+        });
     }
 }
