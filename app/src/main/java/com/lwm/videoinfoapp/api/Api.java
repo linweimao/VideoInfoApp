@@ -1,5 +1,7 @@
 package com.lwm.videoinfoapp.api;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -83,10 +85,13 @@ public class Api {
     }
 
     // get请求
-    public void getRequest(RequestCallback callback) {
+    public void getRequest(Context context, RequestCallback callback) {
+        SharedPreferences sp = context.getSharedPreferences("sp_lwm", MODE_PRIVATE);
+        String token = sp.getString("token", "");
         String url = getAppendUrl(requestUrl, mParams);
         Request request = new Request.Builder()
                 .url(url)
+                .addHeader("token", token)
                 .get()
                 .build();
         Call call = mClient.newCall(request);

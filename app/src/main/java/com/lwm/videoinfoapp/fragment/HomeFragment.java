@@ -89,8 +89,7 @@ public class HomeFragment extends BaseFragment {
         String token = getStringFromSp("token");
         if (!StringUtils.isEmpty(token)) {
             HashMap<String, Object> params = new HashMap<>();
-            params.put("token", token);
-            Api.config(ApiConfig.VIDEO_CATEGORY_LIST, params).getRequest(new RequestCallback() {
+            Api.config(ApiConfig.VIDEO_CATEGORY_LIST, params).getRequest(getActivity(), new RequestCallback() {
                 @Override
                 public void onSuccess(String res) {
                     Log.d("onSuccess：", res);

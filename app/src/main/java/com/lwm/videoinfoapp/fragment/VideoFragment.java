@@ -74,11 +74,11 @@ public class VideoFragment extends BaseFragment implements OnItemChildClickListe
      */
     protected int mLastPos = mCurPos;
 
-    private Handler mHandler = new Handler(){
+    private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
-            switch (msg.what){
+            switch (msg.what) {
                 case 0:
                     // 将数据设置进 VideoAdapter
                     mVideoAdapter.setDatas(datas);
@@ -277,12 +277,11 @@ public class VideoFragment extends BaseFragment implements OnItemChildClickListe
         String token = getStringFromSp("token");
         if (!StringUtils.isEmpty(token)) {
             HashMap<String, Object> params = new HashMap<>();
-            params.put("token", token);
             // "page" 和 "limit"用于实现分页
             params.put("page", pageNum); // 分页：第几页
             params.put("limit", ApiConfig.PAGE_SIZE);  // 分页：每页5条数据
             params.put("categoryId", categoryId);
-            Api.config(ApiConfig.VIDEO_LIST_BY_CATEGORY, params).getRequest(new RequestCallback() {
+            Api.config(ApiConfig.VIDEO_LIST_BY_CATEGORY, params).getRequest(getActivity(), new RequestCallback() {
                 @Override
                 public void onSuccess(String res) {
                     Log.d("onSuccess：", res);

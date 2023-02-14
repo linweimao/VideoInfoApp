@@ -122,11 +122,10 @@ public class NewsFragment extends BaseFragment implements NewsAdapter.OnItemClic
         String token = getStringFromSp("token");
         if (!StringUtils.isEmpty(token)) {
             HashMap<String, Object> params = new HashMap<>();
-            params.put("token", token);
             // "page" 和 "limit"用于实现分页
             params.put("page", pageNum); // 分页：第几页
             params.put("limit", ApiConfig.PAGE_SIZE);  // 分页：每页5条数据
-            Api.config(ApiConfig.NEWS_LIST, params).getRequest(new RequestCallback() {
+            Api.config(ApiConfig.NEWS_LIST, params).getRequest(getActivity(), new RequestCallback() {
                 @Override
                 public void onSuccess(String res) {
                     Log.d("onSuccess：", res);
