@@ -5,8 +5,10 @@ import android.view.View;
 import android.widget.Button;
 
 import com.lwm.videoinfoapp.activity.BaseActivity;
+import com.lwm.videoinfoapp.activity.HomeActivity;
 import com.lwm.videoinfoapp.activity.LoginActivity;
 import com.lwm.videoinfoapp.activity.RegisterActivity;
+import com.lwm.videoinfoapp.util.StringUtils;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
@@ -35,6 +37,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected void initData() {
+        // 免密登录(第二次启动应用直接进入程序)
+        if (!StringUtils.isEmpty(getStringFromSp("token"))){
+            navigateTo(HomeActivity.class);
+            finish();
+        }
         mBtnLogin.setOnClickListener(this);
         mBtnRegister.setOnClickListener(this);
     }

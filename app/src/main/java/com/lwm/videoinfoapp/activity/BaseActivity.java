@@ -58,4 +58,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         editor.putString(key, val);
         editor.commit();
     }
+
+    protected String getStringFromSp(String key) {
+        SharedPreferences sp = getSharedPreferences("sp_lwm", MODE_PRIVATE);
+        return sp.getString(key, "");
+    }
 }
