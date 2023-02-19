@@ -111,7 +111,7 @@ public class LoginActivity extends BaseActivity {
         HashMap<String, Object> params = new HashMap<String, Object>();
         params.put("mobile", account);
         params.put("password", pwd);
-        Api.config(ApiConfig.LOGIN, params).postRequest(new RequestCallback() {
+        Api.config(ApiConfig.LOGIN, params).postRequest(this, new RequestCallback() {
             @Override
             public void onSuccess(String res) {
                 Log.e("onSuccess", res);

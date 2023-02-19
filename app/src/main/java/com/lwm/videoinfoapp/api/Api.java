@@ -55,7 +55,9 @@ public class Api {
     }
 
     // post请求
-    public void postRequest(RequestCallback callback) {
+    public void postRequest(Context context, RequestCallback callback) {
+        SharedPreferences sp = context.getSharedPreferences("sp_lwm", MODE_PRIVATE);
+        String token = sp.getString("token", "");
         JSONObject jsonObject = new JSONObject(mParams);
         String jsonStr = jsonObject.toString();
         RequestBody requestBodyJson =
@@ -65,6 +67,7 @@ public class Api {
         Request request = new Request.Builder()
                 .url(requestUrl)
                 .addHeader("contentType", "application/json;charset=utf-8")
+                .addHeader("token", token)
                 .post(requestBodyJson)
                 .build();
         // 第三步创建 Call 回调对象
