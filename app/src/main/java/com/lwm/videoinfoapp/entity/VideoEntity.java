@@ -9,15 +9,12 @@ public class VideoEntity implements Serializable {
      * author : 狙击手麦克
      * coverurl : http://sf3-xgcdn-tos.pstatp.com/img/tos-cn-i-0004/527d013205a74eb0a77202d7a9d5b511~tplv-crop-center:1041:582.jpg
      * headurl : https://sf1-ttcdn-tos.pstatp.com/img/pgc-image/c783a73368fa4666b7842a635c63a8bf~360x360.image
-     * commentNum : 121
-     * likeNum : 123
-     * collectNum : 122
      * playurl : http://vfx.mtime.cn/Video/2019/02/04/mp4/190204084208765161.mp4
      * createTime : 2020-07-14 11:21:45
      * updateTime : 2020-07-19 12:05:33
      * categoryId : 1
-     * categoryName : null
-     * videoSocialEntity : null
+     * categoryName : 游戏
+     * videoSocialEntity : {"commentnum":0,"likenum":0,"collectnum":0,"flagLike":false,"flagCollect":false}
      */
 
     private int vid;
@@ -25,15 +22,12 @@ public class VideoEntity implements Serializable {
     private String author;
     private String coverurl;
     private String headurl;
-    private int commentNum;
-    private int likeNum;
-    private int collectNum;
     private String playurl;
     private String createTime;
     private String updateTime;
     private int categoryId;
-    private Object categoryName;
-    private Object videoSocialEntity;
+    private String categoryName;
+    private VideoSocialEntity videoSocialEntity;
 
     public int getVid() {
         return vid;
@@ -75,30 +69,6 @@ public class VideoEntity implements Serializable {
         this.headurl = headurl;
     }
 
-    public int getCommentNum() {
-        return commentNum;
-    }
-
-    public void setCommentNum(int commentNum) {
-        this.commentNum = commentNum;
-    }
-
-    public int getLikeNum() {
-        return likeNum;
-    }
-
-    public void setLikeNum(int likeNum) {
-        this.likeNum = likeNum;
-    }
-
-    public int getCollectNum() {
-        return collectNum;
-    }
-
-    public void setCollectNum(int collectNum) {
-        this.collectNum = collectNum;
-    }
-
     public String getPlayurl() {
         return playurl;
     }
@@ -131,19 +101,72 @@ public class VideoEntity implements Serializable {
         this.categoryId = categoryId;
     }
 
-    public Object getCategoryName() {
+    public String getCategoryName() {
         return categoryName;
     }
 
-    public void setCategoryName(Object categoryName) {
+    public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
     }
 
-    public Object getVideoSocialEntity() {
+    public VideoSocialEntity getVideoSocialEntity() {
         return videoSocialEntity;
     }
 
-    public void setVideoSocialEntity(Object videoSocialEntity) {
+    public void setVideoSocialEntity(VideoSocialEntity videoSocialEntity) {
         this.videoSocialEntity = videoSocialEntity;
+    }
+
+    public static class VideoSocialEntity {
+        /**
+         * commentnum : 103
+         * likenum : 121
+         * collectnum : 220
+         */
+        private int commentnum;
+        private int likenum;
+        private int collectnum;
+        private boolean flagLike; // 是否点赞
+        private boolean flagCollect; // 是否收藏
+
+        public int getCommentnum() {
+            return commentnum;
+        }
+
+        public void setCommentnum(int commentnum) {
+            this.commentnum = commentnum;
+        }
+
+        public int getLikenum() {
+            return likenum;
+        }
+
+        public void setLikenum(int likenum) {
+            this.likenum = likenum;
+        }
+
+        public int getCollectnum() {
+            return collectnum;
+        }
+
+        public void setCollectnum(int collectnum) {
+            this.collectnum = collectnum;
+        }
+
+        public boolean isFlagLike() {
+            return flagLike;
+        }
+
+        public void setFlagLike(boolean flagLike) {
+            this.flagLike = flagLike;
+        }
+
+        public boolean isFlagCollect() {
+            return flagCollect;
+        }
+
+        public void setFlagCollect(boolean flagCollect) {
+            this.flagCollect = flagCollect;
+        }
     }
 }
