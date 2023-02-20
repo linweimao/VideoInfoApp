@@ -27,6 +27,7 @@
     <string name="my_comment_text">评论</string>
     <string name="my_share_text">分享</string>
     <string name="my_collection_text">我的收藏</string>
+    <string name="my_collection_empty">暂无收藏...</string>
     <string name="my_change_skin_text">换肤</string>
     <string name="my_logout_text">退出登录</string>
 </resources>

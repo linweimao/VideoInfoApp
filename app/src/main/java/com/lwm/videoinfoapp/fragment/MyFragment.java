@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.lwm.videoinfoapp.R;
+import com.lwm.videoinfoapp.activity.MyCollectActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -42,6 +43,7 @@ public class MyFragment extends BaseFragment {
             case R.id.img_header: // 头像
                 break;
             case R.id.rl_collect: // 我的收藏
+                navigateTo(MyCollectActivity.class);
                 break;
             case R.id.rl_skin: // 换肤
                 break;

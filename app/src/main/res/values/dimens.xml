@@ -380,6 +380,7 @@
     <dimen name="dimen_600dp">600dp</dimen>
     <dimen name="dimen_640dp">640dp</dimen>
     <dimen name="dimen_720dp">720dp</dimen>
+    <dimen name="dimen__50dp">-50dp</dimen>
     <!--设置字体大小-->
     <dimen name="size_6sp">6sp</dimen>
     <dimen name="size_7sp">7sp</dimen>
