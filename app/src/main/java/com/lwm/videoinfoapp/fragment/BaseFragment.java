@@ -77,6 +77,12 @@ public abstract class BaseFragment extends Fragment {
         startActivity(intent);
     }
 
+    public void navigateToWithFlag(Class cls, int flags) {
+        Intent intent = new Intent(getActivity(), cls);
+        intent.setFlags(flags);
+        startActivity(intent);
+    }
+
     // SharedPreferences 本地存储
     public void saveStringToSp(String key, String val) {
         SharedPreferences sp = getActivity().getSharedPreferences("sp_lwm", MODE_PRIVATE);
@@ -88,6 +94,13 @@ public abstract class BaseFragment extends Fragment {
     protected String getStringFromSp(String key) {
         SharedPreferences sp = getActivity().getSharedPreferences("sp_lwm", MODE_PRIVATE);
         return sp.getString(key, "");
+    }
+
+    protected void removeByKey(String key) {
+        SharedPreferences sp = getActivity().getSharedPreferences("sp_lwm", MODE_PRIVATE);
+        SharedPreferences.Editor edit = sp.edit();
+        edit.remove(key);
+        edit.commit();
     }
 
     /**

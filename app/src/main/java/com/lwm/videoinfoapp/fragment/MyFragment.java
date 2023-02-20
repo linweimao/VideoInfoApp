@@ -1,9 +1,11 @@
 package com.lwm.videoinfoapp.fragment;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.lwm.videoinfoapp.R;
+import com.lwm.videoinfoapp.activity.LoginActivity;
 import com.lwm.videoinfoapp.activity.MyCollectActivity;
 
 import butterknife.BindView;
@@ -48,6 +50,9 @@ public class MyFragment extends BaseFragment {
             case R.id.rl_skin: // 换肤
                 break;
             case R.id.rl_logout: // 退出登录
+                removeByKey("token");
+                navigateToWithFlag(LoginActivity.class,
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 break;
         }
     }
