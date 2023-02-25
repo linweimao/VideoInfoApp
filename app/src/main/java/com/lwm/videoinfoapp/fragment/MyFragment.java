@@ -10,6 +10,7 @@ import com.lwm.videoinfoapp.activity.MyCollectActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import skin.support.SkinCompatManager;
 
 public class MyFragment extends BaseFragment {
 
@@ -48,6 +49,20 @@ public class MyFragment extends BaseFragment {
                 navigateTo(MyCollectActivity.class);
                 break;
             case R.id.rl_skin: // 换肤
+                String skin = getStringFromSp("skin");
+                if (skin.equals("night")) {
+                    // 恢复应用默认皮肤
+                    SkinCompatManager.getInstance().restoreDefaultTheme();
+                    saveStringToSp("skin", "default");
+                } else {
+                    /**
+                     * "night": 皮肤包名称 与 res-night文件的 night文件名保持一致
+                     * SkinCompatManager.SKIN_LOADER_STRATEGY_BUILD_IN: 皮肤包加载策略(_night命名在后面)
+                     */
+                    SkinCompatManager.getInstance().loadSkin("night", SkinCompatManager.SKIN_LOADER_STRATEGY_BUILD_IN); // 后缀加载
+                    saveStringToSp("skin", "night");
+                }
+
                 break;
             case R.id.rl_logout: // 退出登录
                 removeByKey("token");

@@ -10,14 +10,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_50dp"
-        android:background="@color/color_344261">
+        android:background="@color/skin_topbar_bg_color">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/news_title"
-            android:textColor="@color/color_ffffff"
+            android:textColor="@color/skin_text_white"
             android:textSize="@dimen/size_18sp" />
 
     </RelativeLayout>
