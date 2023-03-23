@@ -54,6 +54,14 @@ public class Api {
         return getInstance();
     }
 
+    // 配置聚合接口API
+    public static Api configJuhe(String url) {
+        mClient = new OkHttpClient.Builder()
+                .build();
+        requestUrl = url;
+        return getInstance();
+    }
+
     // post请求
     public void postRequest(Context context, RequestCallback callback) {
         SharedPreferences sp = context.getSharedPreferences("sp_lwm", MODE_PRIVATE);
@@ -144,5 +152,38 @@ public class Api {
             url += buffer.toString();
         }
         return url;
+    }
+
+    // 聚合数据 get请求
+    public void getJuheRequest(Context context, RequestCallback callback) {
+        Request request = new Request.Builder()
+                .url(requestUrl)
+                .get()
+                .build();
+        Call call = mClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("onFailure", e.getMessage());
+                callback.onFailure(e);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String result = response.body().string();
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String errorCode = jsonObject.getString("error_code");
+                    // token为空(没有登录) 或 token失效时 code均为401)
+                    // expire为失效时间
+                    if (!"0".equals(errorCode)) {
+                        return;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                callback.onSuccess(result);
+            }
+        });
     }
 }

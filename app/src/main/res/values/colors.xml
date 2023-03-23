@@ -40,4 +40,5 @@
     <color name="color_a6a6a6">#A6A6A6</color>
     <color name="color_00bfff">#00BFFF</color>
     <color name="color_9000bfff">#9000BFFF</color>
+    <color name="colorAccent">#D81B60</color>
 </resources>

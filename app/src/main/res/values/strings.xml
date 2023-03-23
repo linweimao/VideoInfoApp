@@ -30,4 +30,11 @@
     <string name="my_collection_empty">暂无收藏...</string>
     <string name="my_change_skin_text">换肤</string>
     <string name="my_logout_text">退出登录</string>
+    <string name="hot_news_item_title">部分牙膏功效宣称误导消费者 监管新规12月1日起实施</string>
+    <string name="hot_news_item_author">作者：</string>
+    <string name="hot_news_item_author_content">人民网，供稿：人民资讯</string>
+    <string name="hot_news_item_category">类别：</string>
+    <string name="hot_news_item_category_content">健康</string>
+    <string name="hot_news_item_time">时间：</string>
+    <string name="hot_news_item_time_content">2023-03-23 16:29:00</string>
 </resources>

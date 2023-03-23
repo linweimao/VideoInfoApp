@@ -13,6 +13,7 @@ import com.lwm.videoinfoapp.adapter.MyPagerAdapter;
 import com.lwm.videoinfoapp.entity.TabEntity;
 import com.lwm.videoinfoapp.fragment.CollectFragment;
 import com.lwm.videoinfoapp.fragment.HomeFragment;
+import com.lwm.videoinfoapp.fragment.HotNewsCarrierFragment;
 import com.lwm.videoinfoapp.fragment.MyFragment;
 import com.lwm.videoinfoapp.fragment.NewsFragment;
 import com.lwm.videoinfoapp.view.FixedViewPager;
@@ -46,7 +47,7 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void initData() {
         mFragments.add(HomeFragment.newInstance());
-        mFragments.add(NewsFragment.newInstance());
+        mFragments.add(HotNewsCarrierFragment.newInstance());
         mFragments.add(MyFragment.newInstance());
         for (int i = 0; i < mTitles.length; i++) {
             mTabEntities.add(new TabEntity(mTitles[i], mIconSelectIds[i], mIconUnselectIds[i]));
